@@ -1,1 +1,0 @@
-from backgroundtasks import celery_app
