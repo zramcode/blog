@@ -7,6 +7,8 @@ from operations import crud
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import traceback
 from fastapi_pagination import Page
+from fastapi_cache.decorator import cache
+
 
 router = APIRouter(
     prefix="/posts",
@@ -21,6 +23,7 @@ try:
     return crud.creatpost(db, post, current_user.id)
 
  @router.get("/", response_model=Page[PostOut])
+ @cache(expire=60)
  def read_posts(db: Session = Depends(get_db)):
     posts = crud.get_allpost(db)
     return sqlalchemy_paginate(posts)

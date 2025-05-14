@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      - DATABASE_URL=sqlite:///./blog.db
+      - REDIS_URL=redis://redis:6379
+
+  redis:
+    image: redis:alpine
+    container_name: redis_cache
+
