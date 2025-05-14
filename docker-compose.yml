@@ -18,4 +18,11 @@ services:
   redis:
     image: redis:alpine
     container_name: redis_cache
+  worker:
+    build: .
+    command: celery -A celery_worker.celery worker --loglevel=info
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379/0
 
