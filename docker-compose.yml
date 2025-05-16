@@ -14,11 +14,12 @@ services:
     environment:
       - DATABASE_URL=sqlite:///./blog.db
       - REDIS_URL=redis://redis:6379
-
-  redis:
+redis:
     image: redis:alpine
     container_name: redis_cache
-  worker:
+    ports:
+      - "6379:6379"
+worker:
     build: .
     command: celery -A celery_worker.celery worker --loglevel=info
     depends_on:
