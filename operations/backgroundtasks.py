@@ -7,7 +7,8 @@ from fastapi import  HTTPException
 
 celery_app = Celery(
     "tasks",
-    broker=settings.redis_broker_url,  
+    broker=settings.redis_broker_url, 
+    backend=settings.redis_broker_url
 )
 try:
  @celery_app.task
