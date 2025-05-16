@@ -13,7 +13,7 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 8000
     environment:
       - DATABASE_URL=sqlite:///./blog.db
-      - REDIS_URL=redis://redis:6379
+      - REDIS_URL=${REDIS_URL}
 redis:
     image: redis:alpine
     container_name: redis_cache
@@ -25,5 +25,5 @@ worker:
     depends_on:
       - redis
     environment:
-      - REDIS_URL=redis://redis:6379/0
+      - REDIS_URL=${REDIS_URL}
 
